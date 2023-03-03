@@ -1,10 +1,8 @@
 import java.text.SimpleDateFormat
 import java.util.Calendar
-
 fun main() {
     menuPrincipal()
 }
-
 fun menuPrincipal() {
     do {
         println("----------------------------------------------")
@@ -23,7 +21,6 @@ fun menuPrincipal() {
         }
     } while (seleccion !in 1..3)
 }
-
 fun menuCompra(): Compra {
     val cart = Compra()
     println("Cargando menu de compra .... ")
@@ -46,10 +43,10 @@ fun menuCompra(): Compra {
         unidad = readln().toIntOrNull()?: -1
         } while (unidad < 1)
         when (item) {
-            1 -> cart.addItem("Pan", 0.5 * unidad)
-            2 -> cart.addItem("Agua", 0.3 * unidad)
-            3 -> cart.addItem("Azúcar", 2.4 * unidad)
-            4 -> cart.addItem("Leche", 1.5 * unidad)
+            1 -> cart.addItem("Pan", 0.5 * unidad,unidad)
+            2 -> cart.addItem("Agua", 0.3 * unidad, unidad)
+            3 -> cart.addItem("Azúcar", 2.4 * unidad, unidad)
+            4 -> cart.addItem("Leche", 1.5 * unidad, unidad)
             5 -> salir()
             else -> println("Error debe introducir un numero entre 1-5")
         }
@@ -72,18 +69,14 @@ fun menuCompra(): Compra {
             println(cart.getItems())
         }
     } while (respuesta == "SI")
-
-
     println("El precio total es:${cart.getTotalPrice()}")
     return cart
 }
-
 fun currentDate(): String {
     val current = Calendar.getInstance().time
     val formatter = SimpleDateFormat("dd/MM/yyyy")
     return formatter.format(current)
 }
-
 fun menuFactura(menuCompra: Compra) {
     var pago = ""
         println("¿Como quieres pagar?")
@@ -129,9 +122,24 @@ fun menuFactura(menuCompra: Compra) {
     println("Aceptamos devoluciones hasta 14 dias naturales, a excepción de productos abiertos")
     println("Gracias por su confianza")
     println("---------------------------------------")
+    println("")
+    println("¿Quieres copia?")
+    if (readln().uppercase() == "SI") {
+        println("Imprimiendo Factura")
+        Thread.sleep(1000)
+        println("---------------------------------------")
+        println("Nombre de la Empresa: Food Store")
+        println("Numero de Teléfono: 683552178")
+        println("Fecha de la compra: ${currentDate()}")
+        println("Productos comprados: ${menuCompra.getItems()}")
+        println("Método de pago utilizado $pago")
+        println("Cambio Recibido: $dinero€")
+        println("Aceptamos devoluciones hasta 14 dias naturales, a excepción de productos abiertos")
+        println("Gracias por su confianza")
+        println("---------------------------------------")
+    }
     salir()
 }
-
 fun salir() {
     println("Gracias por utilizar este programa")
 }
